@@ -23,15 +23,39 @@ const SecondColumn = styled.div`
 `;
 const Page = () => {
   const [TXT, setTXT] = useState([]);
-  const handleText = (data) => setTXT((prev) => [...prev, data]);
+  const handleText = (txt) =>
+    setTXT((prev) => [
+      ...prev,
+      { txt, styl: { family: "", size: 1, color: "" } },
+    ]);
   const [family, setFamily] = useState("");
   const [size, setSize] = useState(1);
   const [color, setColor] = useState("");
+  const handleDelete = (id) => {
+    setTXT(TXT.filter((_, i) => id !== i));
+  };
+  const handleSave = (id) => {
+    console.log(id)
+    const updatedDta = TXT.filter((data, i) =>
+    id === i ? (data.styl = { family, size, color }) : data
+  )
+  console.log(updatedDta)
 
+    setTXT(
+      updatedDta
+    );
+  };
   return (
     <RowLayout>
       <FirstColumn>
-        <Canvas CLR={color} FNT={size} FMLY={family} TXTS={TXT} />
+        <Canvas
+          CLR={color}
+          FNT={size}
+          FMLY={family}
+          TXTS={TXT}
+          onSave={handleSave}
+          onDelete={handleDelete}
+        />
       </FirstColumn>
       <SecondColumn>
         <Edit
