@@ -7,13 +7,31 @@ const StyledTxt = styled.p`
 `;
 const Card = styled.div`
   width: 100%;
-  padding: 20px;
+  /* padding: 20px; */
+  display: grid;
+  grid-template-columns: ${({ edit }) => (edit ? "80% 20%" : "100%")};
   border: 1px solid #ddd;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   background-color: #ffff;
   margin: 20px auto;
   cursor: pointer;
+`;
+const CardBody = styled.div`
+  width: 100%;
+  padding: 20px;
+  /* border: 1px solid #ddd; */
+  /* border-radius: 8px; */
+  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+  /* background-color: #ffff; */
+  /* margin: 20px auto; */
+  /* cursor: pointer; */
+`;
+const BtnsBody = styled.div`
+  width: 100%;
+  border-radius: 8px;
+  margin: 0;
+  padding: 0;
 `;
 const SelectedCard = styled(Card)`
   border: 1px solid #52abdf;
@@ -33,7 +51,9 @@ const Canvas = ({ TXTS, FMLY, CLR, FNT }) => {
     handleEdit(selectedKey);
   }, [CLR, FMLY, FNT]);
   const handleSelect = (key) => {
-    !selectedKey && selectedKey === key
+    console.log(key)
+    console.log( selectedKey === null)
+    selectedKey === null && selectedKey === key
       ? setSelectedKey(null)
       : setSelectedKey(key);
   };
@@ -47,19 +67,31 @@ const Canvas = ({ TXTS, FMLY, CLR, FNT }) => {
   return TXTS[0] ? (
     <>
       {TXTS.map((txt, i) =>
-        selectedKey && selectedKey === i ? (
-          <SelectedCard key={i} onClick={() => handleSelect(i)}>
-            <StyledTxt
-              edit={selectedKey === i}
-              size={size + "rem"}
-              color={color}
-              family={family}
-            >
-              {txt}
-            </StyledTxt>
+        selectedKey !== null && selectedKey === i ? (
+          <SelectedCard
+            key={i}
+            edit={selectedKey === i}
+            onClick={() => handleSelect(i)}
+          >
+            <CardBody>
+              <StyledTxt
+                edit={selectedKey === i}
+                size={size + "rem"}
+                color={color}
+                family={family}
+              >
+                {txt}
+              </StyledTxt>
+            </CardBody>
+            <BtnsBody>
+                <span>Delete</span>
+                <span>Save</span>
+            </BtnsBody>
           </SelectedCard>
         ) : (
-          <Card key={i} onClick={() => handleSelect(i)}>
+          <Card key={i} 
+            edit={selectedKey === i}
+            onClick={() => handleSelect(i)}>
             <StyledTxt size={size + "rem"} color={color} family={family}>
               {txt}
             </StyledTxt>
