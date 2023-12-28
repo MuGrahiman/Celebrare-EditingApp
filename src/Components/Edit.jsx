@@ -120,12 +120,19 @@ const StyledSpan = styled.span`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  /* font-family: ; */
 `;
 
-const Edit = ({ onSubmitTxt }) => {
+const Edit = ({
+  onSubmitTxt,
+  setFont,
+  font,
+  setFamily,
+  family,
+  setColor,
+  color,
+}) => {
   const [txt, setTxt] = useState("");
-  const [family, setFamily] = useState("");
-  const [size, setSize] = useState(14);
 
   const handleText = (e) => {
     e.preventDefault();
@@ -155,23 +162,28 @@ const Edit = ({ onSubmitTxt }) => {
             onChange={(e) => setFamily(e.target.value)}
           >
             <option value=""></option>
-            <option value="hi">hi</option>
-            <option value="simple">simple</option>
-            <option value="soon">soon</option>
+            <option value="monospace">monospace</option>
+            <option value="cursive">cursive</option>
+            <option value="fantasy">fantasy</option>
           </StyledSelect>
         </StyledLabel>
         <StyledLabel>
           Size:
           <StyledInput
             type="number"
-            value={size}
-            onChange={(e) => setSize(e.target.value)}
+            value={font}
+            onChange={(e) => setFont(e.target.value)}
             placeholder="Enter font size"
           />
         </StyledLabel>
         <StyledLabel>
           Choose Your Color:
-          <StyledSelect name="" id="">
+          <StyledSelect
+            name=""
+            id=""
+            value={color}
+            onChange={(e) => setColor(e.target.value)}
+          >
             <option value=""></option>
             <option value="red">red</option>
             <option value="green">green</option>
